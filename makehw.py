@@ -13,12 +13,6 @@ class TkGui:
         format_frame.pack(side="top",expand=True)
         self.format_var = IntVar()
         self.old_format_var = 0
-        #ascii_format_button = Radiobutton(format_frame,command=self.convert_plain_text,variable=self.format_var,text="ASCII",value=0)
-        #ascii_format_button.pack(side="left")
-        #binary_format_button = Radiobutton(format_frame,command=self.convert_plain_text,variable=self.format_var,text="Binary",value=1)
-        #binary_format_button.pack(side="left")
-        #hex_format_button = Radiobutton(format_frame,command=self.convert_plain_text,variable=self.format_var,text="Hexadecimal",value=2)
-        #hex_format_button.pack(side="left")
         
         top_frame = Frame(self.root)
         top_frame.pack(side="top",expand=True)
@@ -69,17 +63,6 @@ class TkGui:
         self.status_label.pack(side='top')
         close_button = Button(button_frame, text="Close", command=self.close)
         close_button.pack(side="top")
-        
-
-    def showerror(self,title,message):
-        def destroy_dialog():
-            dlg.destroy()
-            self.root.deiconify()
-        self.root.withdraw()
-        dlg = Toplevel(self.root)
-        dlg.title(title)
-        Label(dlg,text=message).pack(side="top")
-        Button(dlg,text="Ok",command=destroy_dialog).pack(side="top")
 
     def run(self):
         self.root.mainloop()
@@ -278,16 +261,9 @@ class TkGui:
             class_time_text = self.class_time_text_entry.get().replace(' ', '\\ ')
             instructor_text = self.instructor_text_entry.get().replace(' ', '\\ ')
             author_text = self.author_text_entry.get().replace(' ', '\\ ')
-            
-            #print title_text
-            #print due_date_text
-            #print class_text
-            #print class_time_text
-            #print instructor_text
-            #print author_text
-            
+                        
             s = makeString(self, title_text, due_date_text, class_text, class_time_text, instructor_text, author_text)
-            #s = makeString(self)
+            
             import os.path
             mypath = self.title_text_entry.get().lower().replace(' ', '_')
             if not os.path.isdir(mypath):
@@ -298,9 +274,9 @@ class TkGui:
             f.write(s)
             f.close()
             self.status.set("Saved to " + hw_file)
-            #self.root.quit()
+
         except Exception,err:
-            self.showerror("Exception",traceback.format_exc())
+            close()
 
 
 
